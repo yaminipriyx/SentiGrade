@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>SentiGrade</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="content-left">
+            <h2>Sentiment Analysis Chatbox</h2>
+            <form method="POST">
+                <textarea name="comment" placeholder="Type your comment here..." required></textarea><br>
+                <input type="submit" value="Analyze">
+            </form>
+
+            {% if comment %}
+                <p><strong>Your original comment:</strong> {{ comment }}</p>
+            {% endif %}
+            
+            {% if sentiment %}
+                <h2 class="{{ sentiment | lower }}">{{ sentiment }} Sentiment</h2>
+            {% endif %}
+
+            <div class="comment-stack">
+                <h3>Previous Comments:</h3>
+                {% for entry in previous_comments %}
+                    <div class="comment-box">
+                        <p><strong>Original Comment:</strong> {{ entry.comment }}</p>
+                        <p><strong>Language Detected:</strong> {{ entry.language }}</p>
+                        <p><strong>Translated Comment:</strong> {{ entry.translated_comment }}</p>
+                        <p><strong>Sentiment:</strong> 
+                            <span class="{{ entry.sentiment | lower }}">{{ entry.sentiment }}</span>
+                        </p>
+                        <p><small><strong>Time:</strong> {{ entry.timestamp }}</small></p>
+                    </div>
+                {% else %}
+                    <p>No previous comments yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="content-right">
+            <canvas id="sentimentChart"></canvas>
+            <div id="overallSentiment"></div>
+        </div>
+
+        
+    </div>
+    <!-- Right section with chart -->
+<div class="content-right">
+    <canvas id="sentimentChart"></canvas>
+
+    <!-- Add this wrapper around #overallSentiment -->
+    <div class="sentiment-box">
+        <div id="overallSentiment"></div>
+    </div>
+</div>
+
+
+    <script>
+        async function fetchSentimentData() {
+            const response = await fetch('/sentiment-data');
+            const data = await response.json();
+            
+            const labels = ["Positive", "Negative", "Neutral"];
+            const values = [data.Positive, data.Negative, data.Neutral];
+            
+            const maxSentiment = labels[values.indexOf(Math.max(...values))];
+            document.getElementById('overallSentiment').innerHTML = `<h3>Overall Sentiment: ${maxSentiment}</h3>`;
+            
+            const ctx = document.getElementById('sentimentChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: ['#66BB6A', '#EF5350', '#FFEB3B'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            enabled: true
+                        },
+                        datalabels: {
+                            display: true,
+                            color: '#fff',
+                            formatter: function(value) {
+                                return value;
+                            },
+                            font: {
+                                weight: 'bold',
+                                size: 14,
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+        
+        window.onload = fetchSentimentData;
+    </script>
+</body>
+</html>

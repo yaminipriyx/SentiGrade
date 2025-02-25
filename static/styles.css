@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #3f51b5;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.content-left {
+    flex: 1;
+    max-width: 60%;
+    margin-right: 20px;
+}
+
+.content-right {
+    flex: 1;
+    min-width: 300px;
+    max-width: 40%;
+    height: 400px;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+input[type="submit"] {
+    background-color: #4c7faf;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 12px; /* Add this line for rounded square edges */
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.comment-stack {
+    margin-top: 20px;
+}
+
+.comment-box {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+h2.positive {
+    color: #4CAF50;
+}
+
+h2.negative {
+    color: #F44336;
+}
+
+h2.neutral {
+    color: #FFEB3B;
+}
+
+span.positive {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+span.negative {
+    color: #F44336;
+    font-weight: bold;
+}
+
+span.neutral {
+    color: #FFEB3B;
+    font-weight: bold;
+}
+.sentiment-box {
+    width: 100%;  /* Full width of the container */
+    text-align: center;  /* Center-align text */
+    margin-top: 20px;  /* Space between chart and sentiment box */
+    padding: 10px;  /* Padding inside the box */
+    background-color: #f0f0f0;  /* Light background color */
+    border-radius: 10px;  /* Rounded corners */
+    border: 1px solid #ddd;  /* Border around the box */
+}
