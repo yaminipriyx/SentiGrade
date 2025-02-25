@@ -13,6 +13,8 @@ SentiGrade is a multilingual sentiment analysis tool supporting:
 - Fast and efficient text analysis
 - API support for easy integration
 
+For a quick test click the link in the description.
+
 ## 📦 Installation
 Clone the repository:
 ```sh
