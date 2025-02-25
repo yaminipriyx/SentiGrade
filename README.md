@@ -18,3 +18,12 @@ Clone the repository:
 ```sh
 git clone https://github.com/yaminipriyx/SentiGrade.git
 cd SentiGrade
+
+```
+##Install dependencies
+```sh
+pip install -r requirements.txt
+```
+##Run the Application
+```
+python app.py
